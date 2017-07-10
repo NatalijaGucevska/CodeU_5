@@ -11,6 +11,9 @@ public class Language {
 	List<String> sortedWords;
 
 	public Language(List<String> sortedWords) {
+		if(sortedWords==null || sortedWords.size()==0) {
+			throw new IllegalArgumentException();
+		}
 		this.sortedWords = sortedWords;
 	}
 
@@ -51,37 +54,47 @@ public class Language {
 	private Pair<Map<Character, Set<Character>>, Map<Character, Integer>> buildGraph() {
 		Map<Character, Set<Character>> graph = new HashMap<Character, Set<Character>>();
 		Map<Character, Integer> degree = new HashMap<Character, Integer>();
-
-		for (int i = 0; i < sortedWords.size() - 1; i++) {
-			String currenttWord = sortedWords.get(i);
-			String adjacentWord = sortedWords.get(i + 1);
-
-			boolean wait = true;
-			int count = 0;
-			int limit = Math.min(currenttWord.length(), adjacentWord.length());
-
-			while (wait) {
-				if (currenttWord.charAt(count) != adjacentWord.charAt((count))) {
-					Set<Character> set = graph.get(currenttWord.charAt(count));
-					if (set == null) {
-						set = new HashSet<>();
-						graph.put(currenttWord.charAt(count), set);
-					}
-					set.add(adjacentWord.charAt(count));
-
-					// Make sure that vertices with zero indegree will be in the
-					// degree map
-					degree.putIfAbsent(currenttWord.charAt(count), 0);
-
-					// Keep track of the indegree of every vertex while
-					// constructing the graph
-					int deg = degree.getOrDefault(adjacentWord.charAt(count), 0);
-					degree.put(adjacentWord.charAt(count), deg + 1);
-
-					wait = false;
-				}
-				count++;
+		
+		if(sortedWords.size()==1){
+			String currentWord = sortedWords.get(0);
+			for(char c: currentWord.toCharArray()) {
+				graph.putIfAbsent(c, new HashSet<>());
+				degree.putIfAbsent(c, 0);
+			}
+		} else {
+			for (int i = 0; i < sortedWords.size() - 1; i++) {
+				String currenttWord = sortedWords.get(i);
+				String adjacentWord = sortedWords.get(i + 1);
+	
+				boolean wait = true;
+				int count = 0;
+				int limit = Math.min(currenttWord.length(), adjacentWord.length());
+				//Don't enter if word is empty
 				wait = wait && count < limit;
+				
+				while (wait) {
+					if (currenttWord.charAt(count) != adjacentWord.charAt((count))) {
+						Set<Character> set = graph.get(currenttWord.charAt(count));
+						if (set == null) {
+							set = new HashSet<>();
+							graph.put(currenttWord.charAt(count), set);
+						}
+						set.add(adjacentWord.charAt(count));
+	
+						// Make sure that vertices with zero indegree will be in the
+						// degree map
+						degree.putIfAbsent(currenttWord.charAt(count), 0);
+	
+						// Keep track of the indegree of every vertex while
+						// constructing the graph
+						int deg = degree.getOrDefault(adjacentWord.charAt(count), 0);
+						degree.put(adjacentWord.charAt(count), deg + 1);
+	
+						wait = false;
+					}
+					count++;
+					wait = wait && count < limit;
+				}
 			}
 		}
 
