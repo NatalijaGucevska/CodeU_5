@@ -4,11 +4,11 @@ import java.util.*;
 
 public class Language {
 	List<String> sortedWords;
-	
+
 	public Language(List<String> sortedWords) {
 		this.sortedWords = sortedWords;
 	}
-	
+
 	public List<Character> getSortedAlphabet() {
 
 		Pair<Map<Character, Set<Character>>, Map<Character, Integer>> graph_degree = buildGraph();
@@ -39,7 +39,7 @@ public class Language {
 						graph.put(currenttWord.charAt(count), set);
 					}
 					set.add(adjacentWord.charAt(count));
-					
+
 					// Make sure that vertices with zero indegree will be in the
 					// degree map
 					degree.putIfAbsent(currenttWord.charAt(count), 0);
@@ -47,8 +47,8 @@ public class Language {
 					// Keep track of the indegree of every vertex while
 					// constructing the graph
 					int deg = degree.getOrDefault(adjacentWord.charAt(count), 0);
-					degree.put(adjacentWord.charAt(count), deg+1); 
-					
+					degree.put(adjacentWord.charAt(count), deg + 1);
+
 					wait = false;
 				}
 				count++;
