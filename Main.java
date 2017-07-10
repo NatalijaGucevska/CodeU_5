@@ -23,8 +23,19 @@ public class Main {
 		sortedWords.add("CAR"); 
 		sortedWords.add("AAR"); 
 	
-	
+		System.out.print("Expected -Graph contains cycles-, result: ");
 		lang = new Language(sortedWords); 
-		System.out.println("Expected [], result: " + lang.getSortedAlphabet().toString());
+		try {
+			lang.getSortedAlphabet();
+		} catch(IllegalArgumentException e ) {
+			System.out.println("-" + e.getMessage() + "-");
+		}
+		
+		//==========================================Test with only one word=====================================================
+				sortedWords = new ArrayList<>(); 
+				sortedWords.add("ART"); 
+
+				lang = new Language(sortedWords); 
+				System.out.println("Expected [A, R, T], result: " + lang.getSortedAlphabet().toString());
 	}
 }
