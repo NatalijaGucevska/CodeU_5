@@ -59,9 +59,17 @@ public class Language {
 
 		return new Pair<Map<Character, Set<Character>>, Map<Character, Integer>>(graph, degree);
 	}
+
+	private Set<Character> findStartVertices(Map<Character, Integer> degree) {
+		Set<Character> vertices = new HashSet<>();
+
+		for (Character character : degree.keySet()) {
+			if (degree.get(character) == 0) {
+				vertices.add(character);
 			}
 		}
-		return graph;
+		return vertices;
+	}
 	}
 
 }
