@@ -12,7 +12,9 @@ public class Language {
 	public List<Character> getSortedAlphabet() {
 
 		Pair<Map<Character, Set<Character>>, Map<Character, Integer>> graph_degree = buildGraph();
-		return topologicalSort(graph_degree);
+		Map<Character, Set<Character>> graph = graph_degree.getFirst();
+		Map<Character, Integer> degree = graph_degree.getSecond();
+		return topologicalSort(graph, degree);
 	}
 
 	/**
@@ -73,12 +75,8 @@ public class Language {
 	/**
 	 * Topological sort of the vertices of an acyclic graph
 	 */
-	private List<Character> topologicalSort(
-			Pair<Map<Character, Set<Character>>, Map<Character, Integer>> graph_degree) {
-		List<Character> result = new ArrayList<Character>();
-
-		Map<Character, Set<Character>> graph = graph_degree.getFirst();
-		Map<Character, Integer> degree = graph_degree.getSecond();
+	private List<Character> topologicalSort(Map<Character, Set<Character>> graph, Map<Character, Integer> degree) {
+		List<Character> result = new ArrayList<Character>(); 
 
 		Queue<Character> openVertices = new LinkedList<>();
 		Set<Character> firstCharacter = findStartVertices(degree);
