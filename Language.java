@@ -17,8 +17,9 @@ public class Language {
 	 * In order to perform topological sort we need to build a graph from the
 	 * sorted words of the unknown language
 	 */
-	private Map<Character, Set<Character>> buildGraph() {
+	private Pair<Map<Character, Set<Character>>, Map<Character, Integer>> buildGraph() {
 		Map<Character, Set<Character>> graph = new HashMap<Character, Set<Character>>();
+		Map<Character, Integer> degree = new HashMap<Character, Integer>();
 
 		for (int i = 0; i < sortedWords.size() - 1; i++) {
 			String currenttWord = sortedWords.get(i);
@@ -36,10 +37,19 @@ public class Language {
 						graph.put(currenttWord.charAt(count), set);
 					}
 					set.add(adjacentWord.charAt(count));
+					
+					//Keep track of the indegree of every vertex while constructing the graph
+					int deg = degree.getOrDefault(adjacentWord.charAt(count), 0);
+					degree.put(adjacentWord.charAt(count), deg+1); 
+					
 					wait = false;
 				}
 				count++;
-				wait = count < limit;
+				wait = wait && count < limit;
+			}
+		}
+		return new Pair<Map<Character, Set<Character>>, Map<Character, Integer>>(graph, degree);
+	}
 			}
 		}
 		return graph;
