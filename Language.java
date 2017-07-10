@@ -55,8 +55,6 @@ public class Language {
 				wait = wait && count < limit;
 			}
 		}
-		System.out.println(graph.toString());
-		System.out.println(degree.toString());
 
 		return new Pair<Map<Character, Set<Character>>, Map<Character, Integer>>(graph, degree);
 	}
@@ -86,13 +84,11 @@ public class Language {
 		Set<Character> firstCharacter = findStartVertices(degree);
 
 		// Add all vertices with 0 indegree at the top of the queue
-		System.out.println(firstCharacter.toString());
 		openVertices.addAll(firstCharacter);
 
 		while (!openVertices.isEmpty()) {
 			Character vertex = openVertices.poll();
 			result.add(vertex);
-			System.out.println(graph.toString());
 			for (Character c : graph.getOrDefault(vertex, new HashSet<>())) {
 				int vertex_degree = degree.get(c) - 1;
 				if (vertex_degree == 0) {
