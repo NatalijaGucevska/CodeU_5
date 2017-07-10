@@ -37,5 +37,13 @@ public class Main {
 
 				lang = new Language(sortedWords); 
 				System.out.println("Expected [A, R, T], result: " + lang.getSortedAlphabet().toString());
+				
+		//==========================================Test with two empty words=====================================================
+				sortedWords = new ArrayList<>(); 
+				sortedWords.add(""); 
+				sortedWords.add(""); 
+
+				lang = new Language(sortedWords); 
+				System.out.println("Expected [], result: " + lang.getSortedAlphabet().toString());
 	}
 }
