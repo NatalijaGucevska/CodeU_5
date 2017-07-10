@@ -107,7 +107,7 @@ public class Language {
 	 * Topological sort of the vertices of an acyclic graph
 	 * 
 	 * For the language with sorted words [ART, RAT, CAT, CAR] 
-	 * valid sortes are: 
+	 * valid sorts are: 
 	 * [A, T, R, C] and [T, A, R, C]
 	 * 
 	 * return - A list of sorted vertices.  
@@ -121,7 +121,7 @@ public class Language {
 
 		// Add all vertices with 0 indegree at the top of the queue
 		openVertices.addAll(firstCharacter);
-
+		
 		while (!openVertices.isEmpty()) {
 			Character vertex = openVertices.poll();
 			result.add(vertex);
@@ -133,7 +133,11 @@ public class Language {
 				degree.put(c, vertex_degree);
 			}
 		}
-
+		
+		//Make sure that all vertices are in result
+		if(degree.size() != result.size()) {
+			throw new IllegalArgumentException("Graph contains cycles"); 
+		}
 		return result;
 	}
 
