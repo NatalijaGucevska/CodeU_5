@@ -13,6 +13,7 @@ public class Language {
 
 		return alphabet; 
 	}
+
 	/**
 	 * In order to perform topological sort we need to build a graph from the
 	 * sorted words of the unknown language
@@ -38,7 +39,12 @@ public class Language {
 					}
 					set.add(adjacentWord.charAt(count));
 					
-					//Keep track of the indegree of every vertex while constructing the graph
+					// Make sure that vertices with zero indegree will be in the
+					// degree map
+					degree.putIfAbsent(currenttWord.charAt(count), 0);
+
+					// Keep track of the indegree of every vertex while
+					// constructing the graph
 					int deg = degree.getOrDefault(adjacentWord.charAt(count), 0);
 					degree.put(adjacentWord.charAt(count), deg+1); 
 					
@@ -48,6 +54,9 @@ public class Language {
 				wait = wait && count < limit;
 			}
 		}
+		System.out.println(graph.toString());
+		System.out.println(degree.toString());
+
 		return new Pair<Map<Character, Set<Character>>, Map<Character, Integer>>(graph, degree);
 	}
 			}
