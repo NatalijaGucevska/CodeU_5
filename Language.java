@@ -70,6 +70,38 @@ public class Language {
 		}
 		return vertices;
 	}
+
+	/**
+	 * Topological sort of the vertices of an acyclic graph
+	 */
+	private List<Character> topologicalSort(
+			Pair<Map<Character, Set<Character>>, Map<Character, Integer>> graph_degree) {
+		List<Character> result = new ArrayList<Character>();
+
+		Map<Character, Set<Character>> graph = graph_degree.getFirst();
+		Map<Character, Integer> degree = graph_degree.getSecond();
+
+		Queue<Character> openVertices = new LinkedList<>();
+		Set<Character> firstCharacter = findStartVertices(degree);
+
+		// Add all vertices with 0 indegree at the top of the queue
+		System.out.println(firstCharacter.toString());
+		openVertices.addAll(firstCharacter);
+
+		while (!openVertices.isEmpty()) {
+			Character vertex = openVertices.poll();
+			result.add(vertex);
+			System.out.println(graph.toString());
+			for (Character c : graph.getOrDefault(vertex, new HashSet<>())) {
+				int vertex_degree = degree.get(c) - 1;
+				if (vertex_degree == 0) {
+					openVertices.add(c);
+				}
+				degree.put(c, vertex_degree);
+			}
+		}
+
+		return result;
 	}
 
 }
