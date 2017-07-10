@@ -54,6 +54,7 @@ public class Language {
 	private Pair<Map<Character, Set<Character>>, Map<Character, Integer>> buildGraph() {
 		Map<Character, Set<Character>> graph = new HashMap<Character, Set<Character>>();
 		Map<Character, Integer> degree = new HashMap<Character, Integer>();
+		Set<Character> uniqueChars = uniqueCharacters();
 		
 		if(sortedWords.size()==1){
 			String currentWord = sortedWords.get(0);
@@ -80,7 +81,7 @@ public class Language {
 							graph.put(currenttWord.charAt(count), set);
 						}
 						set.add(adjacentWord.charAt(count));
-	
+						uniqueChars.remove(currenttWord.charAt(count));
 						// Make sure that vertices with zero indegree will be in the
 						// degree map
 						degree.putIfAbsent(currenttWord.charAt(count), 0);
@@ -97,8 +98,29 @@ public class Language {
 				}
 			}
 		}
-
+		
+		//Make sure that all letters appear  in graph
+		for(char c: uniqueChars) {
+			graph.putIfAbsent(c, new HashSet<>());
+			degree.putIfAbsent(c, 0);
+		}
+		
 		return new Pair<Map<Character, Set<Character>>, Map<Character, Integer>>(graph, degree);
+	}
+	
+	/**
+	 * Returns a set of unique characters
+	 */
+	private Set<Character> uniqueCharacters() {
+		Set<Character> characters = new HashSet<>();
+		
+		for(String word: sortedWords) {
+			for(char c: word.toCharArray()){
+				characters.add(c); 
+			}
+		}
+		
+		return characters; 
 	}
 
 	/**
