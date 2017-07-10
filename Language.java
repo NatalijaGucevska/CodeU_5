@@ -1,17 +1,18 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.*;
 
 public class Language {
-	ArrayList<String> sortedWords; 
+	List<String> sortedWords;
 	
-	public Language(ArrayList<String> sortedWords) {
+	public Language(List<String> sortedWords) {
 		this.sortedWords = sortedWords;
 	}
 	
 	public List<Character> getSortedAlphabet() {
-		List<Character> alphabet = new ArrayList<Character>();
 
-		return alphabet; 
+		Pair<Map<Character, Set<Character>>, Map<Character, Integer>> graph_degree = buildGraph();
+		return topologicalSort(graph_degree);
 	}
 
 	/**
