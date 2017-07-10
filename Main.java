@@ -45,12 +45,21 @@ public class Main {
 
 				lang = new Language(sortedWords); 
 				System.out.println("Expected [], result: " + lang.getSortedAlphabet().toString());
-		//==========================================Test with two empty words=====================================================
+		//==========================================Test with two words from which one is empty=====================================================
 				sortedWords = new ArrayList<>(); 
 				sortedWords.add(""); 
 				sortedWords.add("ART"); 
 
 				lang = new Language(sortedWords); 
 				System.out.println("Expected [A, R, T], result: " + lang.getSortedAlphabet().toString());
+	   //==========================================Test with words of different legth=====================================================
+				sortedWords = new ArrayList<>(); 
+				sortedWords.add("A"); 
+				sortedWords.add("ART"); 
+				sortedWords.add("CRTa"); 
+				
+
+				lang = new Language(sortedWords); 
+				System.out.println("Expected [A, a, R, T, C], result: " + lang.getSortedAlphabet().toString());
 	}
 }
