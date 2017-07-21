@@ -74,22 +74,24 @@ public class Language {
 				wait = wait && count < limit;
 				
 				while (wait) {
-					if (currenttWord.charAt(count) != adjacentWord.charAt((count))) {
-						Set<Character> set = graph.get(currenttWord.charAt(count));
+					char charOfCurrent = currenttWord.charAt(count);
+					char charOfAdjecent = adjacentWord.charAt(count);
+					if (charOfCurrent != charOfAdjecent) {
+						Set<Character> set = graph.get(charOfCurrent);
 						if (set == null) {
 							set = new HashSet<>();
-							graph.put(currenttWord.charAt(count), set);
+							graph.put(charOfCurrent, set);
 						}
-						set.add(adjacentWord.charAt(count));
-						uniqueChars.remove(currenttWord.charAt(count));
+						set.add(charOfAdjecent);
+						uniqueChars.remove(charOfCurrent);
 						// Make sure that vertices with zero indegree will be in the
 						// degree map
-						degree.putIfAbsent(currenttWord.charAt(count), 0);
+						degree.putIfAbsent(charOfCurrent, 0);
 	
 						// Keep track of the indegree of every vertex while
 						// constructing the graph
-						int deg = degree.getOrDefault(adjacentWord.charAt(count), 0);
-						degree.put(adjacentWord.charAt(count), deg + 1);
+						int deg = degree.getOrDefault(charOfAdjecent, 0);
+						degree.put(charOfAdjecent, deg + 1);
 	
 						wait = false;
 					}
