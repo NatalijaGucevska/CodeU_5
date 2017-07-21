@@ -59,5 +59,15 @@ public class Main {
 
 		lang = new Language(sortedWords);
 		System.out.println("Expected [A, a, R, T, C], result: " + lang.getSortedAlphabet().toString());
+		
+		// ========================================= Test with null argument =============================================================
+
+		System.out.print("Expected: Illegal Argument exception for null argument, result: ");
+		try {
+			new Language(null);
+		}catch(IllegalArgumentException e) {
+			System.out.println("Illegal Argument exception for null argument");
+		}
+		
 	}
 }
