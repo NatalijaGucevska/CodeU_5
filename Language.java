@@ -67,13 +67,9 @@ public class Language {
 				String currenttWord = sortedWords.get(i);
 				String adjacentWord = sortedWords.get(i + 1);
 	
-				boolean wait = true;
-				int count = 0;
 				int limit = Math.min(currenttWord.length(), adjacentWord.length());
-				//Don't enter if word is empty
-				wait = wait && count < limit;
 				
-				while (wait) {
+				for(int count=0; count < limit; count++ ) {
 					char charOfCurrent = currenttWord.charAt(count);
 					char charOfAdjecent = adjacentWord.charAt(count);
 					if (charOfCurrent != charOfAdjecent) {
@@ -93,10 +89,8 @@ public class Language {
 						int deg = degree.getOrDefault(charOfAdjecent, 0);
 						degree.put(charOfAdjecent, deg + 1);
 	
-						wait = false;
+						break; 
 					}
-					count++;
-					wait = wait && count < limit;
 				}
 			}
 		}
